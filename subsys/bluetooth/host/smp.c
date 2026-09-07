@@ -2997,6 +2997,14 @@ bool bt_smp_request_ltk(struct bt_conn *conn, uint64_t rand, uint16_t ediv, uint
 			conn->le.keys = bt_keys_find(BT_KEYS_PERIPH_LTK,
 						     conn->id, &conn->le.dst);
 		}
+
+#if defined(CONFIG_DESKTOP_HPTB_ENABLE)
+		/* HPAC Dongle Fallback: allow Dongle B with a different BDA to use Dongle A's keys */
+		extern bool hptb_is_hpac_dongle(uint8_t id);
+		if (!conn->le.keys && hptb_is_hpac_dongle(conn->id)) {
+			conn->le.keys = bt_keys_find_by_id(conn->id);
+		}
+#endif
 	}
 
 	if (ediv == 0U && rand == 0U &&

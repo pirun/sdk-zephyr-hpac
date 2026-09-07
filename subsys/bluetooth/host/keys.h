@@ -165,6 +165,15 @@ struct bt_keys *bt_keys_get_type(enum bt_keys_type type, uint8_t id, const bt_ad
 struct bt_keys *bt_keys_find(enum bt_keys_type type, uint8_t id, const bt_addr_le_t *addr);
 
 /**
+ * @brief Find key reference by ID (used for HPAC Dongle fallback)
+ *
+ * @param id Key identifier.
+ * @return A valid reference pointer to the key slot on success.
+ *         Otherwise, a NULL value is returned.
+ */
+struct bt_keys *bt_keys_find_by_id(uint8_t id);
+
+/**
  * @brief Find key reference by trying to resolve an RPA using IRK
  *
  * @param id Key identifier.

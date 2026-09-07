@@ -213,6 +213,19 @@ struct bt_keys *bt_keys_find(enum bt_keys_type type, uint8_t id, const bt_addr_l
 	return NULL;
 }
 
+struct bt_keys *bt_keys_find_by_id(uint8_t id)
+{
+	int i;
+
+	for (i = 0; i < ARRAY_SIZE(key_pool); i++) {
+		if (key_pool[i].keys && key_pool[i].id == id) {
+			return &key_pool[i];
+		}
+	}
+
+	return NULL;
+}
+
 struct bt_keys *bt_keys_get_type(enum bt_keys_type type, uint8_t id, const bt_addr_le_t *addr)
 {
 	struct bt_keys *keys;
